@@ -7,34 +7,63 @@ using System.Web.Http;
 
 namespace AuthenticationInWebAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
+
+    [RoutePrefix("V1")]
     public class ValuesController : ApiController
     {
         // GET api/values
-        public IEnumerable<string> Get()
+
+        [AcceptVerbs("Get", "Head")]
+        public IEnumerable<string> GetData()
         {
             return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
+
+        [Route("")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
+        [Route("{name}")]
+        public string GetStudent(string name)
         {
+            Delete(1);
+            return name;
         }
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        // POST api/values
+        ///[AcceptVerbs("put", "options")]
+        //public string Post([FromBody]string value)
+        //{
+        //    return value;
+        //}
+
+        public string HelloWorld([FromBody]string value)
         {
+            return value;
         }
+
+        [HttpOptions]
+        public string GetOptionsAction()
+        {
+            return "GetOptionsAction";
+        }
+
+     
+        // PUT api/values/5
+        //public string Put(int id, [FromBody]string value)
+        //{
+        //    return id.ToString()+""+value;
+        //}
 
         // DELETE api/values/5
-        public void Delete(int id)
+        public int Delete(int id)
         {
-        }
+            return id;
+        }        
     }
 }

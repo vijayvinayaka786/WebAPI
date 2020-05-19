@@ -28,7 +28,46 @@ namespace AuthenticationInWebAPI
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
+
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                //AccessDeniedPath = new PathString("/Security/Access"),
+                //AuthenticationScheme = "FiverSecurityCookie",
+                //AutomaticAuthenticate = true,
+                //AutomaticChallenge = true,
+
+                CookieName = "Cookie.Data",
+                CookiePath = "/",
+                CookieHttpOnly = true,
+                CookieSecure = CookieSecureOption.Always,
+                ExpireTimeSpan = TimeSpan.FromMinutes(5),
+                ///LoginPath = new PathString("/Token"),             
+                //SlidingExpiration = true,
+                //CookieSecure = CookieSecurePolicy.SameAsRequest,  
+                //Events = new CookieAuthenticationEvents
+                //{
+                //    OnSignedIn = context =>
+                //    {
+                //        Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
+                //          "OnSignedIn", context.Principal.Identity.Name);
+                //        return Task.CompletedTask;
+                //    },
+                //    OnSigningOut = context =>
+                //    {
+                //        Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
+                //          "OnSigningOut", context.HttpContext.User.Identity.Name);
+                //        return Task.CompletedTask;
+                //    },
+                //    OnValidatePrincipal = context =>
+                //    {
+                //        Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
+                //          "OnValidatePrincipal", context.Principal.Identity.Name);
+                //        return Task.CompletedTask;
+                //    },
+                //},  
+
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Configure the application for OAuth based flow

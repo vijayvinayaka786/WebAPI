@@ -16,6 +16,8 @@ using Microsoft.Owin.Security.OAuth;
 using AuthenticationInWebAPI.Models;
 using AuthenticationInWebAPI.Providers;
 using AuthenticationInWebAPI.Results;
+using System.Net.Http.Headers;
+using System.Linq;
 
 namespace AuthenticationInWebAPI.Controllers
 {
@@ -56,7 +58,12 @@ namespace AuthenticationInWebAPI.Controllers
         [Route("UserInfo")]
         public UserInfoViewModel GetUserInfo()
         {
-            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Cookie").FirstOrDefault();
+            if (cookie != null)
+            {
+                CookieState cookieState = cookie["Cookie"];
+            }
+                ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
             return new UserInfoViewModel
             {
